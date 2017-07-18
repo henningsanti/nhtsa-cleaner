@@ -65,6 +65,14 @@ def clean_data(file_name):
                                                   "S65|"
                                                   "GT S|"
                                                 "METRIS")] = 'Non-MBUSI'
+    
+    # Calculates average (or actual) affected vehicles per entry of campaign number
+    counts = df['CAMPNO'].value_counts()
+        
+    df['AVGAFF'] = 0
+    for row in counts:
+        index, count = row
+        df['AVGAFF'][df['CAMPNO'] == index] = df['POTAFF'] / count
 
 
     df = df.dropna(subset=['Timestamp', 'Year'])
